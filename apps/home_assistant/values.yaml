@@ -22,6 +22,9 @@ persistence:
   matchLabels: {}
   matchExpressions: {}
 
+configuration:
+  enabled: true
+
 addons:
   codeserver:
     enabled: true

@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: ha-httproute
+  namespace: home-assistant
+spec:
+  parentRefs:
+    - name: app-gateway
+      namespace: kube-system
+      sectionName: https-listener
+  hostnames:
+    - ha.app.damman.tech
+  rules:
+    - matches:
+        - path:
+            type: Prefix
+            value: /
+      forwardTo:
+        - serviceName: home-assistant-service
+          servicePort: 8123

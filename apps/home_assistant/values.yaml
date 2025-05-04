@@ -1,34 +1,58 @@
-replicaCount: 1
-
 image:
   repository: ghcr.io/home-assistant/home-assistant
+  tag:
   pullPolicy: IfNotPresent
-  tag: ""
+
+env:
+  TZ: Europe/Amsterdam
+  
+service:
+  main:
+    ports:
+      http:
+        port: 8123
+
+ingress:
+  main:
+    enabled: false
+
+securityContext:
+  privileged:
+
 
 hostNetwork: true
 
-service:
-  type: ClusterIP
-  port: 8080
-  annotations: {}
+dnsPolicy: ClusterFirstWithHostNet
 
 persistence:
-  enabled: true
-  accessMode: ReadWriteOnce
-  size: 5Gi
-  storageClass: ""
-  existingVolume: ""
-  annotations: {}
-  matchLabels: {}
-  matchExpressions: {}
+  config:
+    enabled: true
+    size: 10Gi
 
-configuration:
-  enabled: true
+  usb:
+    enabled: false
+    type: hostPath
+    hostPath: /path/to/device
+
+metrics:
+  enabled: false
+  serviceMonitor:
+    interval: 1m
+    scrapeTimeout: 30s
+    labels: {}
+  prometheusRule:
+    enabled: false
+    labels: {}
+    rules: []
 
 addons:
   codeserver:
-    enabled: true
-    image:
-      repository: ghcr.io/coder/code-server
-      pullPolicy: IfNotPresent
-      tag: "4.99.2"
+    enabled: false
+    args:
+    - --auth
+    - none
+    - --user-data-dir
+    - /data/config/.vscode
+    volumeMounts:
+    - name: config
+      mountPath: /data/config

@@ -11,10 +11,10 @@ spec:
       namespace: kube-system
       sectionName: https-listener
   rules:
-    - forwardTo:
-        - serviceName: code-server
-          servicePort: 12321
-      matches:
+    - matches:
         - path:
             type: PathPrefix
             value: /
+      forwardTo:
+        - serviceName: code-server
+          servicePort: 12321

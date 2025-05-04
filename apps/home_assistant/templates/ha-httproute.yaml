@@ -11,6 +11,10 @@ spec:
   hostnames:
     - ha.app.damman.tech
   rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
     - forwardTo:
         - serviceName: home-assistant-service
           servicePort: 8123

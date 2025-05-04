@@ -16,5 +16,5 @@ spec:
             type: PathPrefix
             value: /
       forwardTo:
-        - serviceName: code-server
+        - serviceName: home-assistant-codeserver
           servicePort: 12321

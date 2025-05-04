@@ -16,6 +16,6 @@ spec:
             type: PathPrefix
             value: /
     - forwardTo:
-        - serviceName: home-assistant-service
+        - serviceName: home-assistant
           servicePort: 8123
 

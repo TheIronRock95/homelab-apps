@@ -4,17 +4,17 @@ metadata:
   name: codeserver-httproute
   namespace: home-assistant
 spec:
+  hostnames:
+    - codeserver.app.damman.tech
   parentRefs:
     - name: app-gateway
       namespace: kube-system
       sectionName: https-listener
-  hostnames:
-    - codeserver.app.damman.tech
   rules:
-    - matches:
+    - forwardTo:
+        - serviceName: code-server
+          servicePort: 12321
+      matches:
         - path:
             type: PathPrefix
             value: /
-      forwardTo:
-        - serviceName: code-server
-          servicePort: 12321  

@@ -5,7 +5,7 @@ image:
 
 env:
   TZ: Europe/Amsterdam
-  
+
 service:
   main:
     ports:
@@ -47,7 +47,7 @@ metrics:
 
 addons:
   codeserver:
-    enabled: false
+    enabled: true
     args:
     - --auth
     - none

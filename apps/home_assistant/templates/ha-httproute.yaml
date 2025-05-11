@@ -7,7 +7,7 @@ spec:
   parentRefs:
     - name: app-gateway
       namespace: kube-system
-      sectionName: https-listener
+      sectionName: app-https-listener
   hostnames:
     - ha.app.damman.tech
   rules:

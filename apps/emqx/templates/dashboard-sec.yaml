@@ -1,4 +1,4 @@
-{{- if .Values.metrics.enabled }}
+{{- if .Values.externalSecrets.enabled }}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -15,15 +15,11 @@ spec:
       engineVersion: v2
       type: kubernetes.io/basic-auth
       data:
-        username: '{{ `{{ .username }}` }}'
+        username: admin
         password: '{{ `{{ .password }}` }}'
   data:
-    - secretKey: username
-      remoteRef:
-        key: emqx-dashboard-credentials
-        property: username
     - secretKey: password
       remoteRef:
-        key: emqx-dashboard-credentials
-        property: password
+        key: {{ .Values.externalSecrets.emqxDashboardCredentials.secretName }}
+        passwordKey: password
 {{- end }}

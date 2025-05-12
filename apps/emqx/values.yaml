@@ -20,7 +20,7 @@ emqxConfig:
 externalSecrets:
   enabled: true
   emqxDashboardCredentials:
-    secretName: emqx-dashboard-credentials
+    secretName: emqx-dashboard-password
 
 service:
   type: ClusterIP

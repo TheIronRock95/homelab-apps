@@ -22,6 +22,8 @@ externalSecrets:
   emqxDashboardCredentials:
     secretName: emqx-dashboard-password
 
+envFromSecret: "emqx-basic-auth"
+
 service:
   type: ClusterIP
   clusterIP: None

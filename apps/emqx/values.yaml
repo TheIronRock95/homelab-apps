@@ -24,6 +24,14 @@ externalSecrets:
 
 envFromSecret: "emqx-basic-auth"
 
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
 service:
   type: ClusterIP
   clusterIP: None

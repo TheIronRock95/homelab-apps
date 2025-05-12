@@ -38,14 +38,14 @@ httproute:
   enabled: true
   name: emqx-dashboard-httproute
   namespace: emqx
-  hostname: dashboard.emqx.local
+  hostname: dashboard.emqx.svc.damman.tech
   gateway:
-    name: app-gateway
+    name: svc-gateway
     namespace: kube-system
-    sectionName: app-https-listener
+    sectionName: svc-https-listener
   path: /
   backend:
-    name: emqx-service-name
+    name: emqx
     port: 18083
 
 metrics:

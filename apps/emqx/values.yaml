@@ -14,11 +14,11 @@ persistence:
 
 emqxConfig:
   EMQX_CLUSTER__DISCOVERY_STRATEGY: "dns"
-  EMQX_DASHBOARD__DEFAULT_USERNAME: ""
-  EMQX_DASHBOARD__DEFAULT_PASSWORD: ""
+  EMQX_DASHBOARD__DEFAULT_USERNAME: "admin"
+  EMQX_DASHBOARD__DEFAULT_PASSWORD: "public123"
 
 externalSecrets:
-  enabled: true
+  enabled: false
   emqxDashboardCredentials:
     secretName: emqx-dashboard-password
 

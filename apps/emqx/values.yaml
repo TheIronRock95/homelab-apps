@@ -22,7 +22,7 @@ externalSecrets:
   emqxDashboardCredentials:
     secretName: emqx-dashboard-password
 
-envFromSecret: "emqx-basic-auth"
+# envFromSecret: "emqx-basic-auth"
 
 resources:
   limits:

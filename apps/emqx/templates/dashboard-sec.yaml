@@ -18,8 +18,11 @@ spec:
         username: admin
         password: '{{ `{{ .password }}` }}'
   data:
-    - secretKey: password
-      remoteRef:
+  data:
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
         key: {{ .Values.externalSecrets.emqxDashboardCredentials.secretName }}
-        passwordKey: password
+        metadataPolicy: None
+      secretKey: password
 {{- end }}

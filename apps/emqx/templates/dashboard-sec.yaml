@@ -1,27 +1,27 @@
-{{- if .Values.externalSecrets.enabled }}
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: {{ include "emqx.fullname" . }}-basic-auth
-  namespace: {{ .Release.Namespace }}
-spec:
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: onepassword-connect
-  target:
-    name: {{ include "emqx.fullname" . }}-basic-auth
-    creationPolicy: Owner
-    template:
-      engineVersion: v2
-      type: kubernetes.io/basic-auth
-      data:
-        username: admin
-        password: '{{ `{{ .password }}` }}'
-  data:
-    - remoteRef:
-        conversionStrategy: Default
-        decodingStrategy: None
-        key: {{ .Values.externalSecrets.emqxDashboardCredentials.secretName }}
-        metadataPolicy: None
-      secretKey: password
-{{- end }}
+# {{- if .Values.externalSecrets.enabled }}
+# apiVersion: external-secrets.io/v1beta1
+# kind: ExternalSecret
+# metadata:
+#   name: {{ include "emqx.fullname" . }}-basic-auth
+#   namespace: {{ .Release.Namespace }}
+# spec:
+#   secretStoreRef:
+#     kind: ClusterSecretStore
+#     name: onepassword-connect
+#   target:
+#     name: {{ include "emqx.fullname" . }}-basic-auth
+#     creationPolicy: Owner
+#     template:
+#       engineVersion: v2
+#       type: kubernetes.io/basic-auth
+#       data:
+#         username: admin
+#         password: '{{ `{{ .password }}` }}'
+#   data:
+#     - remoteRef:
+#         conversionStrategy: Default
+#         decodingStrategy: None
+#         key: {{ .Values.externalSecrets.emqxDashboardCredentials.secretName }}
+#         metadataPolicy: None
+#       secretKey: password
+# {{- end }}

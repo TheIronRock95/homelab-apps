@@ -2,14 +2,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: {{.Release.Name }}-basic-auth
+  name: {{ include "emqx.fullname" . }}-basic-auth
   namespace: {{ .Release.Namespace }}
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: {{.Release.Name }}-basic-auth
+    name: {{ include "emqx.fullname" . }}-basic-auth
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -17,7 +17,6 @@ spec:
       data:
         username: admin
         password: '{{ `{{ .password }}` }}'
-  data:
   data:
     - remoteRef:
         conversionStrategy: Default

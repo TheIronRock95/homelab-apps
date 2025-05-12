@@ -38,7 +38,7 @@ httproute:
   enabled: true
   name: emqx-dashboard-httproute
   namespace: emqx
-  hostname: dashboard.emqx.svc.damman.tech
+  hostname: dashboard-emqx.svc.damman.tech
   gateway:
     name: svc-gateway
     namespace: kube-system

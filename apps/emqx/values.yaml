@@ -1,0 +1,49 @@
+replicaCount: 3
+image:
+  repository: emqx/emqx
+  pullPolicy: IfNotPresent
+  tag: ""
+
+podManagementPolicy: Parallel
+
+persistence:
+  enabled: false
+  size: 20Mi
+  storageClassName: ""
+  accessMode: ReadWriteOnce
+
+emqxConfig:
+  EMQX_CLUSTER__DISCOVERY_STRATEGY: "dns"
+  EMQX_DASHBOARD__DEFAULT_USERNAME: ""
+  EMQX_DASHBOARD__DEFAULT_PASSWORD: ""
+
+externalSecrets:
+  enabled: true
+
+service:
+  type: ClusterIP
+  clusterIP: None
+  mqtt: 1883
+  mqttssl: 8883
+  ws: 8083
+  wss: 8084
+  dashboard: 18083
+  externalTrafficPolicy: "Cluster"
+
+httproute:
+  enabled: true
+  name: emqx-dashboard-httproute
+  namespace: emqx
+  hostname: dashboard.emqx.local
+  gateway:
+    name: app-gateway
+    namespace: kube-system
+    sectionName: app-https-listener
+  path: /
+  backend:
+    name: emqx-service-name
+    port: 18083
+
+metrics:
+  enabled: false
+  type: prometheus

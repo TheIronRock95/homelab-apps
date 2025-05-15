@@ -7,9 +7,9 @@ image:
 podManagementPolicy: Parallel
 
 persistence:
-  enabled: false
-  size: 20Mi
-  storageClassName: ""
+  enabled: true
+  size: 10Gi
+  storageClassName: "longhorn"
   accessMode: ReadWriteOnce
 
 emqxConfig:

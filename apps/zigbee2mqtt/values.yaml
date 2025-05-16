@@ -1,0 +1,36 @@
+statefulset:
+  storage:
+    enabled: true
+    size: 1Gi
+    storageClassName: longhorn
+
+zigbee2mqtt:
+  timezone: Europe/Amsterdam
+
+  mqtt:
+    server: "mqtt://emqx.emqx.svc.cluster.local:1883"
+
+  serial:
+    # Location of SLZB-06
+    port: tcp://10.0.30.176:6638
+    baudrate: 115200
+    adapter: zstack
+    # Disable green led?
+    disable_led: false
+  # Set output power to max 20
+  advanced:
+    transmit_power: 20
+
+httproutes:
+- enabled: true
+  name: ha-httproute
+  namespace: home-assistant
+  hostname: zigbee.app.damman.tech
+  path: /
+  gateway:
+    name: app-gateway
+    namespace: kube-system
+    sectionName: app-https-listener
+  backend:
+    name: zigbee2mqtt
+    port: 8080

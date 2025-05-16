@@ -38,4 +38,5 @@ httproutes:
     sectionName: app-https-listener
   backend:
     name: zigbee2mqtt
+    namespace: zigbee2mqtt
     port: 8080

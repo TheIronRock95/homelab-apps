@@ -21,5 +21,8 @@ spec:
       backendRefs:
         - name: {{ .backend.name }}
           port: {{ .backend.port }}
+{{- if .backend.namespace }}
+          namespace: {{ .backend.namespace }}
+{{- end }}
 {{- end }}
 {{- end }}

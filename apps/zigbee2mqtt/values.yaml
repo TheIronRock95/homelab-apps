@@ -23,7 +23,7 @@ zigbee2mqtt:
 
 httproutes:
 - enabled: true
-  name: ha-httproute
+  name: zigbee-httproute
   namespace: home-assistant
   hostname: zigbee.app.damman.tech
   path: /

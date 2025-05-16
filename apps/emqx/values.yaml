@@ -20,7 +20,7 @@ externalSecrets:
   items:
   - name: emqx-basic-auth
     templateData:
-      EMQX_DASHBOARD__DEFAULT_USERNAME: admin
+      EMQX_DASHBOARD__DEFAULT_USERNAME: 'admin'
       EMQX_DASHBOARD__DEFAULT_PASSWORD: password
     data:
     - remoteKey: emqx-dashboard-password

@@ -51,16 +51,3 @@ httproutes:
   backend:
     name: zigbee2mqtt
     port: 8080
-
-externalSecrets:
-  enabled: true
-  items:
-  - name: zigbee2mqtt-config
-    secretStoreRef: onepassword-connect
-    data:
-    - remoteKey: zigbee2mqtt-config
-      secretKey: configuration.yaml
-    templateData:
-      configuration.yaml:
-        value: config
-        isSecret: true

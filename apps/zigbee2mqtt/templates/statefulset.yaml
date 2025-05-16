@@ -13,26 +13,30 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "zigbee2mqtt.labels" . | nindent 8 }}
         app: {{ include "zigbee2mqtt.fullname" . }}
     spec:
-      dnsPolicy: {{ .Values.statefulset.dnsPolicy }}
       containers:
         - name: zigbee2mqtt
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: TZ
-              value: {{ .Values.zigbee2mqtt.timezone }}
-          ports:
-            - containerPort: {{ .Values.zigbee2mqtt.frontend.port }}
-              name: web
-              protocol: TCP
+          volumeMounts:
+            - name: data-volume
+              mountPath: /app/data
+      initContainers:
+        - name: copy-config
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - cp /app/readonly/configuration.yaml /app/data/configuration.yaml
           volumeMounts:
             - name: config-volume
-              mountPath: /app/data/configuration.yaml
-              subPath: configuration.yaml
+              mountPath: /app/readonly
+            - name: data-volume
+              mountPath: /app/data
       volumes:
         - name: config-volume
           secret:
-            secretName: zigbee2mqtt-config
+            secretName: {{ .Values.statefulset.secrets.name }}
+        - name: data-volume
+          emptyDir: {}

@@ -56,3 +56,30 @@ addons:
     volumeMounts:
     - name: config
       mountPath: /data/config
+
+httproutes:
+- enabled: true
+  name: ha-httproute
+  namespace: home-assistant
+  hostname: ha.app.damman.tech
+  path: /
+  gateway:
+    name: app-gateway
+    namespace: kube-system
+    sectionName: app-https-listener
+  backend:
+    name: home-assistant
+    port: 8123
+
+- enabled: true
+  name: codeserver-httproute
+  namespace: home-assistant
+  hostname: codeserver.app.damman.tech
+  path: /
+  gateway:
+    name: app-gateway
+    namespace: kube-system
+    sectionName: app-https-listener
+  backend:
+    name: home-assistant-codeserver
+    port: 12321

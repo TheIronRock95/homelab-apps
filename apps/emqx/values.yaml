@@ -40,8 +40,8 @@ service:
   dashboard: 18083
   externalTrafficPolicy: "Cluster"
 
-httproute:
-  enabled: true
+httproutes:
+- enabled: true
   name: emqx-dashboard-httproute
   namespace: emqx
   hostname: dashboard-emqx.svc.damman.tech

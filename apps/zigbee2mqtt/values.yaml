@@ -29,7 +29,7 @@ zigbee2mqtt:
 httproutes:
 - enabled: true
   name: zigbee-httproute
-  namespace: home-assistant
+  namespace: zigbee2mqtt
   hostname: zigbee.app.damman.tech
   path: /
   gateway:
@@ -38,5 +38,4 @@ httproutes:
     sectionName: app-https-listener
   backend:
     name: zigbee2mqtt
-    namespace: zigbee2mqtt
     port: 8080

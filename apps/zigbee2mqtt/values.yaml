@@ -25,6 +25,9 @@ statefulset:
     enabled: true
     size: 1Gi
     storageClassName: longhorn
+    existingVolume: ""
+    matchLabels: {}
+    matchExpressions: {}
 
 secretesMigratorContainer:
   repository: mikefarah/yq

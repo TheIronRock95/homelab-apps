@@ -62,5 +62,5 @@ externalSecrets:
       secretKey: configuration.yaml
     templateData:
       configuration.yaml:
-        value: configuration.yaml
+        value: config
         isSecret: true

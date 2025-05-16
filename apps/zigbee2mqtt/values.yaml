@@ -3,6 +3,18 @@ statefulset:
     enabled: true
     size: 1Gi
     storageClassName: longhorn
+  volumes:
+  - name: config-volume
+    secret:
+      secretName: zigbee2mqtt-config
+      items:
+      - key: configuration.yaml
+        path: configuration.yaml
+  volumeMounts:
+  - name: config-volume
+    mountPath: /app/data/configmap-configuration.yaml
+    subPath: configuration.yaml
+    readOnly: true
 
 service:
   annotations: {}
@@ -12,8 +24,8 @@ service:
 zigbee2mqtt:
   timezone: Europe/Amsterdam
 
-  mqtt:
-    server: "mqtt://emqx.emqx.svc.cluster.local:1883"
+  # mqtt:
+  #   server: "mqtt://emqx.emqx.svc.cluster.local:1883"
 
   serial:
     # Location of SLZB-06
@@ -39,3 +51,16 @@ httproutes:
   backend:
     name: zigbee2mqtt
     port: 8080
+
+externalSecrets:
+  enabled: true
+  items:
+  - name: zigbee2mqtt-config
+    secretStoreRef: onepassword-connect
+    data:
+    - remoteKey: zigbee2mqtt-config
+      secretKey: configuration.yaml
+    templateData:
+      configuration.yaml:
+        value: configuration.yaml
+        isSecret: true

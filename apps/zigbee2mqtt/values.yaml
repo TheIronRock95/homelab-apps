@@ -1,42 +1,53 @@
+image:
+  repository: koenkk/zigbee2mqtt
+  tag: latest
+  pullPolicy: IfNotPresent
+  imagePullSecrets: []
+
+zigbee2mqtt:
+  timezone: Europe/Amsterdam
+  frontend:
+    port: 8080
+
 statefulset:
+  dnsPolicy: ClusterFirst
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  securityContext: {}
+  lifecycle: {}
+  command: []
+  resources: {}
+  volumeMounts: []
+  volumes: []
+  secrets:
+    name: ""
   storage:
     enabled: true
     size: 1Gi
     storageClassName: longhorn
-  volumes:
-  - name: config-volume
-    secret:
-      secretName: zigbee2mqtt-config
-      items:
-      - key: configuration.yaml
-        path: configuration.yaml
-  volumeMounts:
-  - name: config-volume
-    mountPath: /app/data/configmap-configuration.yaml
-    subPath: configuration.yaml
-    readOnly: true
 
+secretesMigratorContainer:
+  repository: mikefarah/yq
+  tag: v4.40.5
+  securityContext: {}
+
+externalSecrets:
+  enabled: true
+  items:
+  - name: zigbee2mqtt-config
+    secretStoreRef: onepassword-connect
+    data:
+    - remoteKey: zigbee2mqtt-config
+      secretKey: configuration.yaml
+    templateData:
+      configuration.yaml:
+        value: configuration.yaml
+        isSecret: true
 service:
   annotations: {}
   type: ClusterIP
   port: 8080
-
-zigbee2mqtt:
-  timezone: Europe/Amsterdam
-
-  # mqtt:
-  #   server: "mqtt://emqx.emqx.svc.cluster.local:1883"
-
-  serial:
-    # Location of SLZB-06
-    port: tcp://10.0.30.176:6638
-    baudrate: 115200
-    adapter: zstack
-    # Disable green led?
-    disable_led: false
-  # Set output power to max 20
-  advanced:
-    transmit_power: 20
 
 httproutes:
 - enabled: true

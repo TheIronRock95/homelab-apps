@@ -17,8 +17,14 @@ emqxConfig:
 
 externalSecrets:
   enabled: true
-  emqxDashboardCredentials:
-    secretName: emqx-dashboard-password
+  items:
+  - name: emqx-basic-auth
+    templateData:
+      EMQX_DASHBOARD__DEFAULT_USERNAME: admin
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: password
+    data:
+    - remoteKey: emqx-dashboard-password
+      secretKey: password
 
 envFromSecret: "emqx-basic-auth"
 

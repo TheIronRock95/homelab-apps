@@ -4,6 +4,11 @@ statefulset:
     size: 1Gi
     storageClassName: longhorn
 
+service:
+  annotations: {}
+  type: ClusterIP
+  port: 8080
+
 zigbee2mqtt:
   timezone: Europe/Amsterdam
 

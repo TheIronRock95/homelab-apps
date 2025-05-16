@@ -10,6 +10,7 @@ zigbee2mqtt:
     port: 8080
 
 statefulset:
+  replicas: 1
   dnsPolicy: ClusterFirst
   affinity: {}
   nodeSelector: {}
@@ -21,7 +22,7 @@ statefulset:
   volumeMounts: []
   volumes: []
   secrets:
-    name: ""
+    name: "" # wordt niet gebruikt, want config is via external secret als secret volume
   storage:
     enabled: true
     size: 1Gi
@@ -44,6 +45,7 @@ externalSecrets:
       configuration.yaml:
         value: configuration.yaml
         isSecret: true
+
 service:
   annotations: {}
   type: ClusterIP

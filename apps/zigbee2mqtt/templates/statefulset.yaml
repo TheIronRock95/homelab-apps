@@ -13,70 +13,19 @@ spec:
       app: {{ include "zigbee2mqtt.fullname" . }}
   template:
     metadata:
-      annotations:
-        checksum/configuration: {{ include (print $.Template.BasePath "/external-secret.yaml") . | sha256sum }}
       labels:
-        {{- include "zigbee2mqtt.labels" . | nindent 8 }}
         app: {{ include "zigbee2mqtt.fullname" . }}
     spec:
       containers:
         - name: zigbee2mqtt
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: Z2M_ONBOARD_NO_SERVER
-              value: "1"
-            - name: TZ
-              value: {{ .Values.zigbee2mqtt.timezone }}
-          ports:
-            - containerPort: {{ .Values.zigbee2mqtt.frontend.port }}
-              name: web
-              protocol: TCP
           volumeMounts:
-            - mountPath: /app/data/configmap-configuration.yaml
-              name: config-volume
-              subPath: configuration.yaml
-            - mountPath: /app/data/
-              name: data-volume
-      initContainers:
-        - name: yq
-          image: "{{ .Values.secretesMigratorContainer.repository }}:{{ .Values.secretesMigratorContainer.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "/bin/sh" ]
-          workingDir: "/app/data"
-          args:
-            - -c
-            - |
-              if [ -f configuration.yaml ]; then
-                echo "Backing up existing configuration file to /app/data/configuration-helm-backup.yaml"
-                cp configuration.yaml configuration-helm-backup.yaml
-              else
-                echo "Creating configuration.yaml from Secret"
-                cp configmap-configuration.yaml configuration.yaml
-              fi
-              yq --inplace '. *= load("configmap-configuration.yaml") | del(.version)' configuration.yaml
-              yq eval-all '. as $item ireduce ({}; . * $item )' configmap-configuration.yaml configuration.yaml > configuration.yaml
-          volumeMounts:
-            - mountPath: /app/data/
-              name: data-volume
-            - mountPath: /app/data/configmap-configuration.yaml
-              name: config-volume
+            - name: config-volume
+              mountPath: /app/data/configuration.yaml
               subPath: configuration.yaml
       volumes:
         - name: config-volume
           secret:
             secretName: zigbee2mqtt-config
-            items:
-              - key: configuration.yaml
-                path: configuration.yaml
-        - name: data-volume
-          emptyDir: {}
-  volumeClaimTemplates:
-    - metadata:
-        name: data-volume
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ .Values.statefulset.storage.storageClassName }}
-        resources:
-          requests:
-            storage: {{ .Values.statefulset.storage.size }}
+---
+{{ include "zigbee2mqtt.external-secret" . }}

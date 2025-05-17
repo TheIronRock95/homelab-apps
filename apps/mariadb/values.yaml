@@ -1,0 +1,50 @@
+architecture: standalone
+
+externalSecrets:
+  enabled: true
+  items:
+  - name: mariadb-auth-secret
+    secretStoreRef: onepassword-connect
+    templateData:
+      mariadb-root-password:
+        value: mariadbRootPassword
+        isSecret: true
+      mariadb-password:
+        value: mariadbUserPassword
+        isSecret: true
+      mariadb-replication-password:
+        value: mariadbReplicationPassword
+        isSecret: true
+    data:
+    - secretKey: mariadb-root-password
+      remoteKey: password
+    - secretKey: mariadb-password
+      remoteKey: password
+    - secretKey: mariadb-replication-password
+      remoteKey: password
+
+auth:
+  existingSecret: mariadb-auth-secret
+  usePasswordFiles: true
+
+primary:
+  persistence:
+    enabled: true
+    storageClass: longhorn
+  service:
+    type: ClusterIP
+    ports:
+      mysql: 3306
+      metrics: 9104
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+metrics:
+  enabled: false
+  containerPorts:
+    http: 9104

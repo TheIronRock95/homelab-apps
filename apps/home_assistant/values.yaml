@@ -19,7 +19,6 @@ ingress:
 securityContext:
   privileged:
 
-
 hostNetwork: true
 
 dnsPolicy: ClusterFirstWithHostNet

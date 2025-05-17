@@ -57,7 +57,7 @@ userDatabase:
   name: homeassistant
   existingSecret: mariadb-secret
   user:
-    secretKey: dbUser
+    value: hadbuser
   password:
     secretKey: dbPassword
 

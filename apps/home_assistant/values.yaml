@@ -3,9 +3,6 @@ image:
   tag: 2025.5.1
   pullPolicy: IfNotPresent
 
-mariadb:
-  enabled: true
-
 env:
   TZ: Europe/Amsterdam
   MYSQL_URL:

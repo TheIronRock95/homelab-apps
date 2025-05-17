@@ -4,7 +4,7 @@ image:
   pullPolicy: IfNotPresent
 
 mariadb:
-  enabled: false
+  enabled: true
 
 env:
   TZ: Europe/Amsterdam

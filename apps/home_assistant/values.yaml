@@ -15,14 +15,13 @@ externalSecrets:
   enabled: true
   items:
   - name: homeassistant-db-url
-    secretStoreRef: onepassword-connect
-    data:
-    - secretKey: MYSQL_URL
-      remoteKey: homeassistant-mysql-url
     templateData:
       MYSQL_URL:
         value: password
         isSecret: true
+    data:
+    - remoteKey: homeassistant-mysql-url
+      secretKey: password
 
 service:
   main:

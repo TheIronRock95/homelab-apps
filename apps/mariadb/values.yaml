@@ -42,6 +42,9 @@ externalSecrets:
       dbPassword:
         value: dbPassword
         isSecret: true
+      dbName:
+        value: homeassistant
+        isSecret: false
 
 settings:
   existingSecret: mariadb-secret
@@ -54,10 +57,11 @@ settings:
   - --collation-server=utf8mb4_unicode_ci
 
 userDatabase:
-  name: homeassistant
+  name:
+    secretKey: dbName
   existingSecret: mariadb-secret
   user:
-    value: hadbuser
+    secretKey: dbUser
   password:
     secretKey: dbPassword
 

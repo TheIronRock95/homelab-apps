@@ -1,6 +1,6 @@
 image:
   repository: koenkk/zigbee2mqtt
-  tag: latest
+  tag: 2.4.0 
   pullPolicy: IfNotPresent
 
 zigbee2mqtt:

@@ -66,8 +66,9 @@ userDatabase:
     secretKey: dbPassword
 
 storage:
-  persistentVolumeClaimName:
-  volumeName: "db-volume"
+  requestedSize: 8Gi
   accessModes:
   - ReadWriteOnce
+  className: "longhorn"
+  volumeName: "db-volume"
   keepPvc: true
